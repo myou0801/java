@@ -1,0 +1,102 @@
+#共通
+spring:
+  config:
+    import:
+    - "optional:classpath:/env-apbase.properties"
+    - "optional:classpath:/env-vendor1.properties"
+  messages:
+    basename: "18n.*-messages"
+    fallback-to-system-locale: false
+    
+  datasource:
+    driver-class-name:
+    url: 
+    username:
+    password: 
+
+
+logging:
+  group:
+    tomcat: "org.apache.catalina,org.apache.coyote,org.apache.tomcat"
+
+---
+#フロントエンド(b2b)
+spring:
+  config:
+    activate:
+      on-profile: b2b
+      
+  datasource:
+    name: b2b-pool
+      
+server:
+  servlet:
+    context-path: 
+
+---
+#フロントエンド(b2c)
+spring:
+  config:
+    activate:
+      on-profile: b2c
+      
+  datasource:
+    name: b2c-pool
+
+server:
+  servlet:
+    context-path: 
+
+---
+#バックエンド(s01)
+spring:
+  config:
+    activate:
+      on-profile: s01
+  datasource:
+    name: s01-pool
+
+server:
+  servlet:
+    context-path: 
+
+---
+#バックエンド(s02)
+spring:
+  config:
+    activate:
+      on-profile: s01
+      
+  datasource:
+    name: s02-pool
+
+server:
+  servlet:
+    context-path: 
+
+---
+#同期バッチ
+spring:
+  config:
+    activate:
+      on-profile: syncbatch
+      
+  datasource:
+    name: syncbatch-pool
+    batch-admin:
+      name: batchadmin-pool
+      
+
+---
+#非同期バッチ
+spring:
+  config:
+    activate:
+      on-profile: asyncbatch
+      
+  datasource:
+    name: asyncbatch-pool
+    batch-admin:
+      name: batchadmin-pool
+
+
