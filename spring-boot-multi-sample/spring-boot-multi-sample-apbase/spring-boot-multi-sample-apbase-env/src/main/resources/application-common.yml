@@ -4,20 +4,62 @@ spring:
     import:
     - "optional:classpath:/env-apbase.properties"
     - "optional:classpath:/env-vendor1.properties"
+    - "optional:classpath:/share-config.yml"
   messages:
     basename: "18n.*-messages"
     fallback-to-system-locale: false
     
   datasource:
+    #プライマリ
     driver-class-name:
     url: 
     username:
     password: 
+        
+    #バッチ管理
+    batch-admin:
+      driver-class-name: ${spring.datasource.driver-class-name}
+      url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      name: batchadmin-pool
+      schema:
+      - classpath:/org/springframework/batch/core/schema-h2.sql
+      - classpath:/org/terasoluna/batch/async/db/schema-h2.sql
+      hikari:
+        auto-commit: false
+    #インメモリ
+    in-memory:
+      driver-class-name: org.h2.Driver
+      url: jdbc:h2:mem:testdb
+      username: sa
+      password:
+      name: inMemory-pool
+      
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
 
+server:
+  error:
+   path: /error/show
+   
 
+management:
+  endpoints:
+    web:
+      base-path: /management
+  endpoint:
+    health:
+      show-details: always
+    
+
+   
 logging:
   group:
     tomcat: "org.apache.catalina,org.apache.coyote,org.apache.tomcat"
+    
+
 
 ---
 #フロントエンド(b2b)
@@ -25,13 +67,27 @@ spring:
   config:
     activate:
       on-profile: b2b
-      
   datasource:
     name: b2b-pool
+#    in-memory:
+#      schema:
+#      - classpath:/org/springframework/session/jdbc/schema-h2.sql
+  session:
+    store-type: ${envprop.apbase.b2b.spring.session.store-type}
+      
+  mvc:
+    static-path-pattern: "/resources/**"
       
 server:
   servlet:
-    context-path: 
+    context-path: ${envprop.apbase.b2b.server.servlet.context-path}
+    session:
+      timeout: ${envprop.apbase.b2b.server.servlet.session.timeout}
+      
+apbase:
+  online:
+    security:
+      front.headers.csp.report-only: ${envprop.apbase.online.security.front.headers.csp.report-only:false}
 
 ---
 #フロントエンド(b2c)
@@ -39,13 +95,21 @@ spring:
   config:
     activate:
       on-profile: b2c
-      
   datasource:
     name: b2c-pool
+#    in-memory:
+#      schema:
+#      - classpath:/org/springframework/session/jdbc/schema-h2.sql
+  session:
+    store-type: ${envprop.apbase.b2c.spring.session.store-type}
+  mvc:
+    static-path-pattern: "/resources/**"
 
 server:
   servlet:
-    context-path: 
+    context-path: ${envprop.apbase.b2c.server.servlet.context-path}
+    session:
+      timeout: ${envprop.apbase.b2c.server.servlet.session.timeout}
 
 ---
 #バックエンド(s01)
@@ -55,24 +119,37 @@ spring:
       on-profile: s01
   datasource:
     name: s01-pool
+#    in-memory:
+#      schema:
+#      - classpath:/org/springframework/session/jdbc/schema-h2.sql
+  session:
+    store-type: ${envprop.apbase.s01.spring.session.store-type}
 
 server:
   servlet:
-    context-path: 
+    context-path: ${envprop.apbase.s01.server.servlet.context-path}
+    session:
+      timeout: ${envprop.apbase.s01.server.servlet.session.timeout}
 
 ---
 #バックエンド(s02)
 spring:
   config:
     activate:
-      on-profile: s01
-      
+      on-profile: s02
   datasource:
     name: s02-pool
+#    in-memory:
+#      schema:
+#      - classpath:/org/springframework/session/jdbc/schema-h2.sql
+  session:
+    store-type: ${envprop.apbase.s02.spring.session.store-type}
 
 server:
   servlet:
-    context-path: 
+    context-path: ${envprop.apbase.s02.server.servlet.context-path}
+    session:
+      timeout: ${envprop.apbase.s02.server.servlet.session.timeout}
 
 ---
 #同期バッチ
@@ -83,9 +160,11 @@ spring:
       
   datasource:
     name: syncbatch-pool
-    batch-admin:
-      name: batchadmin-pool
-      
+    in-memory:
+      schema:
+      - classpath:/org/springframework/batch/core/schema-h2.sql
+    
+
 
 ---
 #非同期バッチ
@@ -96,7 +175,11 @@ spring:
       
   datasource:
     name: asyncbatch-pool
-    batch-admin:
-      name: batchadmin-pool
+    in-memory:
+      schema:
+      - classpath:/org/springframework/batch/core/schema-h2.sql
+      - classpath:/org/terasoluna/batch/async/db/schema-h2.sql
 
-
+  batch.job.enabled: false
+  
+async-batch-daemon.polling-stop-file-path: /aaa

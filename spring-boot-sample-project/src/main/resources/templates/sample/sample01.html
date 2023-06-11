@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/* WEB-INF/views/user/createForm.html */-->
+<body>
+    <form th:object="${sample01Form}" method="post" th:action="@{/sample01/confirm}">
+        <label for="data1">Data1:</label>
+        <input type="text" th:field="*{data1}">
+        <span id="name-errors" th:errors="*{data1}"></span>
+        <br>
+        <label for="data2">Data2:</label>
+        <input type="text" th:field="*{data2}">
+        <span id="email-errors" th:errors="*{data2}"></span>
+        <br>
+        <label for="data3">Data3:</label>
+        <input type="text" th:field="*{data3}">
+        <span id="email-errors" th:errors="*{data3}"></span>
+        <br>
+        <label for="number1">Number1:</label>
+        <input type="number" th:field="*{number1}">
+        <span id="name-errors" th:errors="*{number1}"></span>
+        <br>
+        <label for="number2">Number2:</label>
+        <input type="number" th:field="*{number2}">
+        <span id="email-errors" th:errors="*{number2}"></span>
+        <br>
+        <button id="confirm" name="confirm" type="submit" value="Submit">Confirm</button>
+    </form>
+</body>
+</html>

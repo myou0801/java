@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+    https-portal:
+        image: "steveltn/https-portal:latest"
+        ports:
+        - "80:80"
+        - "443:443"
+        environment:
+            #ローカルのアプリへの接続の場合、host.docker.internalを使用する
+            DOMAINS: 'localhost.ssl -> http://host.docker.internal:8081'
+            STAGE: local
+            ERROR_LOG: default
+            ACCESS_LOG: default
+        volumes:
+        - ./https-portal/certs:/var/lib/https-portal
+        - ./https-portal/log:/var/log/nginx/
+
+    localstack:
+        image: "localstack/localstack:latest"
+        ports:
+        - "4566:4566"
+        - "4571:4571"
+        environment:
+        - DEFAULT_REGION=ap-northeast-1
+        - SERVICES=${SERVICES- }
+        - DEBUG=${DEBUG- }
+        - DATA_DIR=${DATA_DIR- }
+        - PORT_WEB_UI=${PORT_WEB_UI- }
+        - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+        - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+        - AWS_ACCESS_KEY_ID=dummy
+        - AWS_SECRET_ACCESS_KEY=dummy
+        volumes:
+        - ./localstack:/docker-entrypoint-initaws.d
+
+    redis:
+        image: "redis:latest"
+        ports:
+        - "6379:6379"

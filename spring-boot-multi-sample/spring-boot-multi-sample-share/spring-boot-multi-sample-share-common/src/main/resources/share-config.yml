@@ -1,0 +1,32 @@
+
+apbase:
+  common:
+    proxy:
+    # プロキシ対象の設定
+    # 以下のようにリストで設定する
+    # - "http://abc/"
+    # - ${envprop.proxy.abc}
+    
+  
+  online:
+    security:
+      # フロントエンド
+      front:
+        csrf-ignore:
+        # CSRFトークンチェック無効のURLのリストの設定
+        # 以下のようにリストで設定する
+        # - "/**/user/input"
+        # - ${envprop.csrf.abc}
+        headers:
+          csp:
+            policyDirectives:
+            # Security Content Poricyの設定
+            # Content-Security-Policy: default-src 'self'; script-src script1.com script2.com
+            # を設定する場合以下の設定を記述
+            #  default-src: 
+            #  - "'self'"
+            #  script-src:
+            #  - "script1.com"
+            #  - "script2.com"
+              default-src: 
+              - "'self'"
