@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clearable Input</title>
+    <style>
+        .clearable {
+            position: relative;
+            display: inline-block;
+        }
+
+        .clearable input[type="text"] {
+            padding-right: 24px;
+        }
+
+        .clearable__clear {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<form>
+    <!-- 通常のテキストボックス -->
+    <div>
+        <input type="text" id="textBox1" placeholder="通常のテキストボックス"/>
+    </div>
+
+    <!-- クリアボタンが適用されたテキストボックス -->
+    <div>
+    <span class="clearable">
+        <input type="text" id="textBox2" class="clearable__input" placeholder="クリアボタン付き"
+               onfocus="showClearButton(this)" oninput="showClearButton(this)" onblur="hideClearButton(this)"/>
+        <span class="clearable__clear" onclick="clearInput('textBox2')">&times;</span>
+    </span>
+    </div>
+    <div>
+    <span class="clearable">
+        <input type="text" id="textBox3" class="clearable__input" placeholder="クリアボタン付き"
+               onfocus="showClearButton(this)" oninput="showClearButton(this)" onblur="hideClearButton(this)"/>
+        <span class="clearable__clear" onclick="clearInput('textBox3')">&times;</span>
+    </span>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    function clearInput(id) {
+        var input = document.getElementById(id);
+        if (input) {
+            input.value = '';
+            input.dispatchEvent(new Event('input'));  // For triggering any bound event listeners
+            input.focus(); // Refocus the input
+        }
+    }
+
+    function showClearButton(input) {
+        var clearButton = input.parentNode.querySelector('.clearable__clear');
+        clearButton.style.display = 'inline';
+    }
+
+    function hideClearButton(input) {
+        var clearButton = input.parentNode.querySelector('.clearable__clear');
+        setTimeout(function () {
+            clearButton.style.display = 'none';
+        }, 200);  // Allow time for click event to process before hiding
+    }
+</script>
+</body>
+</html>

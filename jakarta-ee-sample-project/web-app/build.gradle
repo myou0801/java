@@ -8,14 +8,17 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://repository.jboss.org/nexus/content/repositories/releases/'
+    }
 }
 
 ext {
     junitVersion = '5.10.0'
 }
 
-sourceCompatibility = '11'
-targetCompatibility = '11'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -26,6 +29,20 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testImplementation ('org.mockito:mockito-junit-jupiter:5.12.0')
+
+
+//    testImplementation('org.jboss.jsfunit:jboss-jsfunit:2.0.0.Beta2')
+//    testImplementation('org.jboss.jsfunit:jboss-jsfunit-core:2.0.0.Beta2')
+    testImplementation('org.jboss.arquillian.junit5:arquillian-junit5-container:1.9.0.Final')
+//    testImplementation('org.wildfly.arquillian:wildfly-arquillian-container-embedded:5.0.1.Final')
+    testImplementation('org.wildfly.arquillian:wildfly-arquillian-container-managed:5.1.0.Beta3')
+
+
+//    testImplementation('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
+//    testImplementation('org.glassfish:jakarta.faces:4.1.1')
+//    testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-el-api:4.1.0')
+
 }
 
 test {
