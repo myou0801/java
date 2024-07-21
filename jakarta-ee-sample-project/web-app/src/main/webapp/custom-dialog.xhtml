@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: MASE YUICHIRO
+  Date: 2024/07/22
+  Time: 0:43
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:comp="http://xmlns.jcp.org/jsf/composite/comp"
+      >
+
+<h:head>
+    <title>Title</title>
+    <h:outputStylesheet library="css" name="styles.css" />
+    <h:outputScript library="js" name="scripts.js" />
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:commandButton value="Show Alert" onclick="showAlert('This is a custom alert!'); return false;" />
+<!--        <h:commandButton value="Show Confirm" onclick="showConfirm('Are you sure?', handleConfirm); return false;" />-->
+<!--        <h:commandButton value="Show Prompt" onclick="showPrompt('What is your name?', handlePrompt); return false;" />-->
+    </h:form>
+
+    <comp:alertDialog dialogId="alertDialog" message="This is a custom alert!">
+    </comp:alertDialog>
+
+<!--    <comp:confirmDialog dialogId="confirmDialog" message="Are you sure?" callback="handleConfirm">-->
+<!--    </comp:confirmDialog>-->
+
+<!--    <comp:promptDialog dialogId="promptDialog" message="What is your name?" callback="handlePrompt">-->
+<!--    </comp:promptDialog>-->
+</h:body>
+
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: MASE YUICHIRO
+  Date: 2024/07/22
+  Time: 0:53
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+<cc:interface>
+    <cc:attribute name="dialogId" required="true" />
+    <cc:attribute name="message" required="true" />
+    <cc:attribute name="callback" required="true" />
+</cc:interface>
+<cc:implementation>
+    <div class="modal" id="#{cc.attrs.dialogId}">
+        <div class="modal-content">
+            <p>#{cc.attrs.message}</p>
+            <h:commandButton value="Yes" onclick="closeConfirm(true); return false;" />
+            <h:commandButton value="No" onclick="closeConfirm(false); return false;" />
+        </div>
+    </div>
+</cc:implementation>
+</html>

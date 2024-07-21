@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Custom Dialogs</title>
+    <style>
+        /* モーダル全体のスタイル */
+        .modal {
+            display: none; /* 初期状態で非表示 */
+            position: fixed; /* 画面に固定 */
+            top: 0; /* 画面の上部に位置 */
+            left: 0; /* 画面の左端に位置 */
+            width: 100%; /* 画面全体の幅 */
+            height: 100%; /* 画面全体の高さ */
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+            justify-content: center; /* 中央揃え */
+            align-items: center; /* 垂直方向も中央揃え */
+        }
+
+        /* モーダルのコンテンツ部分のスタイル */
+        .modal-content {
+            background-color: #fff; /* 背景は白 */
+            padding: 20px; /* 内側の余白 */
+            border-radius: 5px; /* 角を丸くする */
+            text-align: center; /* 中央揃え */
+        }
+
+        /* ボタンのスタイル */
+        button {
+            margin: 10px; /* 外側の余白 */
+            padding: 10px 20px; /* 内側の余白 */
+            cursor: pointer; /* カーソルをポインターに */
+        }
+    </style>
+</head>
+<body>
+<button onclick="showAlert('This is a custom alert!')">Show Alert</button>
+<button onclick="asyncShowConfirm()">Show Confirm</button>
+<button onclick="asyncShowPrompt()">Show Prompt</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // ダイアログを生成する関数
+        function createDialog(id, message, buttons) {
+            var dialog = document.createElement('div');
+            dialog.id = id;
+            dialog.className = 'modal';
+
+            var dialogContent = document.createElement('div');
+            dialogContent.className = 'modal-content';
+
+            var messageElem = document.createElement('p');
+            messageElem.innerText = message;
+            dialogContent.appendChild(messageElem);
+
+            buttons.forEach(function(button) {
+                var buttonElem = document.createElement('button');
+                buttonElem.innerText = button.text;
+                buttonElem.onclick = button.onclick;
+                dialogContent.appendChild(buttonElem);
+            });
+
+            dialog.appendChild(dialogContent);
+            document.body.appendChild(dialog);
+        }
+
+        // アラートダイアログを表示する関数
+        window.showAlert = function(message) {
+            createDialog('alertDialog', message, [
+                { text: 'OK', onclick: function() { closeDialog('alertDialog'); } }
+            ]);
+            document.getElementById('alertDialog').style.display = 'flex';
+        };
+
+        // 確認ダイアログを表示する非同期関数
+        window.showConfirm = function(message) {
+            return new Promise((resolve) => {
+                createDialog('confirmDialog', message, [
+                    { text: 'Yes', onclick: function() { closeDialog('confirmDialog'); resolve(true); } },
+                    { text: 'No', onclick: function() { closeDialog('confirmDialog'); resolve(false); } }
+                ]);
+                document.getElementById('confirmDialog').style.display = 'flex';
+            });
+        };
+
+        // プロンプトダイアログを表示する非同期関数
+        window.showPrompt = function(message) {
+            return new Promise((resolve) => {
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.id = 'promptInput';
+
+                createDialog('promptDialog', message, [
+                    { text: 'OK', onclick: function() { closeDialog('promptDialog'); resolve(document.getElementById('promptInput').value); } },
+                    { text: 'Cancel', onclick: function() { closeDialog('promptDialog'); resolve(null); } }
+                ]);
+
+                var dialogContent = document.getElementById('promptDialog').querySelector('.modal-content');
+                dialogContent.insertBefore(input, dialogContent.childNodes[1]);
+                document.getElementById('promptDialog').style.display = 'flex';
+            });
+        };
+
+        // ダイアログを閉じる関数
+        function closeDialog(id) {
+            var dialog = document.getElementById(id);
+            if (dialog) {
+                document.body.removeChild(dialog);
+            }
+        }
+
+        // 確認ダイアログの非同期表示を試す関数
+        window.asyncShowConfirm = async function() {
+            const result = await showConfirm('Are you sure?');
+            console.log('Confirm result:', result);
+        };
+
+        // プロンプトダイアログの非同期表示を試す関数
+        window.asyncShowPrompt = async function() {
+            const result = await showPrompt('What is your name?');
+            console.log('Prompt result:', result);
+        };
+    });
+</script>
+</body>
+</html>

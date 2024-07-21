@@ -15,3 +15,31 @@
     cursor: pointer;
     display: none;
 }
+
+/* モーダル全体のスタイル */
+.modal {
+    display: none; /* 初期状態で非表示 */
+    position: fixed; /* 画面に固定 */
+    top: 0; /* 画面の上部に位置 */
+    left: 0; /* 画面の左端に位置 */
+    width: 100%; /* 画面全体の幅 */
+    height: 100%; /* 画面全体の高さ */
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+    justify-content: center; /* 中央揃え */
+    align-items: center; /* 垂直方向も中央揃え */
+}
+
+/* モーダルのコンテンツ部分のスタイル */
+.modal-content {
+    background-color: #fff; /* 背景は白 */
+    padding: 20px; /* 内側の余白 */
+    border-radius: 5px; /* 角を丸くする */
+    text-align: center; /* 中央揃え */
+}
+
+/* ボタンのスタイル */
+button {
+    margin: 10px; /* 外側の余白 */
+    padding: 10px 20px; /* 内側の余白 */
+    cursor: pointer; /* カーソルをポインターに */
+}
