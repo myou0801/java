@@ -42,9 +42,9 @@ dependencies {
     testImplementation('org.wildfly.arquillian:wildfly-arquillian-container-managed:5.1.0.Beta3')
 
 
-//    testImplementation('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
-//    testImplementation('org.glassfish:jakarta.faces:4.1.1')
-//    testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-el-api:4.1.0')
+    testImplementation('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
+    testImplementation('org.glassfish:jakarta.faces:4.1.1')
+    testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-el-api:4.1.0')
 
 }
 

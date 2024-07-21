@@ -5,14 +5,16 @@
 
 <!--    <defaultProtocol type="Servlet 3.0" />-->
 
-    <container qualifier="wildfly" default="true">
+    <container qualifier="wildfly-managed" default="true">
         <configuration>
-            <property name="managementPort">9990</property>
-            <property name="managementAddress">localhost</property>
-            <property name="username">admin</property>
-            <property name="password">Admin</property>
-            <property name="protocol">http</property>
-            <property name="url">http://localhost:8080</property>
+<!--            <property name="managementPort">9990</property>-->
+<!--            <property name="managementAddress">localhost</property>-->
+<!--            <property name="username">admin</property>-->
+<!--            <property name="password">Admin</property>-->
+<!--            <property name="protocol">http</property>-->
+<!--            <property name="url">http://localhost:8080</property>-->
+            <property name="jbossHome">${jbossHome:C:\tools\wildfly\wildfly-32.0.1.Final}</property>
+            <property name="serverConfig">standalone-full.xml</property>
         </configuration>
     </container>
 </arquillian>

@@ -28,30 +28,37 @@
 <form>
     <!-- 通常のテキストボックス -->
     <div>
-        <input type="text" id="textBox1" placeholder="通常のテキストボックス"/>
+        <label for="textBox1">通常のテキストエリア</label>
+        <input type="text" id="textBox1"/>
     </div>
 
     <!-- クリアボタンが適用されたテキストボックス -->
     <div>
     <span class="clearable">
-        <input type="text" id="textBox2" class="clearable__input" placeholder="クリアボタン付き"
-               onfocus="showClearButton(this)" oninput="showClearButton(this)" onblur="hideClearButton(this)"/>
-        <span class="clearable__clear" onclick="clearInput('textBox2')">&times;</span>
+        <label for="textBox2">クリアボタン付きテキストエリア1</label>
+        <input type="text" id="textBox2"
+               onfocus="showClearButton(this)"
+               onkeydown="showClearButton(this)"
+               onblur="hideClearButton(this)"/>
+        <span class="clearable__clear" onclick="clearInput(this)">&times;</span>
     </span>
     </div>
     <div>
     <span class="clearable">
-        <input type="text" id="textBox3" class="clearable__input" placeholder="クリアボタン付き"
-               onfocus="showClearButton(this)" oninput="showClearButton(this)" onblur="hideClearButton(this)"/>
-        <span class="clearable__clear" onclick="clearInput('textBox3')">&times;</span>
+        <label for="textBox3">クリアボタン付きテキストエリア2</label>
+        <input type="text" id="textBox3"
+               onfocus="showClearButton(this)"
+               onkeydown="showClearButton(this)"
+               onblur="hideClearButton(this)"/>
+        <span class="clearable__clear" onclick="clearInput(this)">&times;</span>
     </span>
     </div>
     <button type="submit">Submit</button>
 </form>
 
 <script>
-    function clearInput(id) {
-        var input = document.getElementById(id);
+    function clearInput(clearButton) {
+        var input = clearButton.previousElementSibling;
         if (input) {
             input.value = '';
             input.dispatchEvent(new Event('input'));  // For triggering any bound event listeners

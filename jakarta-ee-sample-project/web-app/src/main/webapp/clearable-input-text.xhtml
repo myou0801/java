@@ -15,16 +15,34 @@
 
 <h:head>
     <title>Title</title>
+    <h:outputStylesheet library="css" name="styles.css" />
+    <h:outputScript library="js" name="scripts.js" />
 </h:head>
 
 <h:body>
     <div>
-        <ci:clearableInput/>
+        <h:outputLabel value="通常のテキストエリア" />
+        <h:inputText />
+    </div>
+    <div>
+        <h:outputLabel value="クリアボタン付きテキストエリア1" />
+        <ci:clearableInputText/>
     </div>
 
     <div>
-        <ci:clearableInput onfocus="anotherFocusFunction()"/>
+        <h:outputLabel value="クリアボタン付きテキストエリア2" for="textBox2" />
+        <ci:clearableInputText id="textBox2" onblur="anotherFocusFunction(this)"/>
+        <h:inputText id="text2" value="" />
     </div>
+
+    <h:outputScript>
+        function anotherFocusFunction(input) {
+            var text2Element = document.getElementById("text2");
+            if (text2Element) {
+                text2Element.value = input.value;
+            }
+        }
+    </h:outputScript>
 </h:body>
 
 </html>
