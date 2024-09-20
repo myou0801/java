@@ -13,7 +13,7 @@
 <!--            <property name="password">Admin</property>-->
 <!--            <property name="protocol">http</property>-->
 <!--            <property name="url">http://localhost:8080</property>-->
-            <property name="jbossHome">${jbossHome:C:\tools\wildfly\wildfly-32.0.1.Final}</property>
+            <property name="jbossHome">${jbossHome:D:\tools\wildfly\wildfly-32.0.1.Final}</property>
             <property name="serverConfig">standalone-full.xml</property>
         </configuration>
     </container>

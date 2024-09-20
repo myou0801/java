@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: MASE YUICHIRO
+  Date: 2024/07/20
+  Time: 18:56
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ci="http://sample.myou.com/jsf">
+
+<h:head>
+    <title>Title</title>
+    <h:outputStylesheet>
+        .clearable {
+            position: relative;
+            display: inline-block;
+        }
+
+        .clearable input[type="text"] {
+            padding-right: 24px;
+        }
+
+        .clearable__clear {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none;
+        }
+    </h:outputStylesheet>
+    <h:outputScript>
+        function clearInput(clearButton) {
+            var input = clearButton.previousElementSibling;
+            if (input) {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));  // For triggering any bound event listeners
+                input.focus(); // Refocus the input
+            }
+        }
+
+        function showClearButton(input) {
+            var clearButton = input.parentNode.querySelector('.clearable__clear');
+            clearButton.style.display = 'inline';
+        }
+
+        function hideClearButton(input) {
+            var clearButton = input.parentNode.querySelector('.clearable__clear');
+            setTimeout(function () {
+                clearButton.style.display = 'none';
+            }, 200);  // Allow time for click event to process before hiding
+        }
+    </h:outputScript>
+</h:head>
+
+<h:body>
+    <div>
+        <h:outputLabel value="通常のテキストエリア"/>
+        <h:inputText/>
+    </div>
+    <div>
+        <h:outputLabel value="クリアボタン付きテキストエリア1"/>
+        <h:panelGroup styleClass="clearable">
+            <h:inputText onfocus="showClearButton(this)"
+                         onkeydown="showClearButton(this)"
+                         onblur="hideClearButton(this)" />
+            <span class="clearable__clear" onclick="clearInput(this)">&times;</span>
+        </h:panelGroup>
+
+    </div>
+
+    <div>
+        <h:outputLabel value="クリアボタン付きテキストエリア2" for="textBox2"/>
+<!--        <ci:clearableInputText id="textBox2" onblur="anotherFocusFunction(this)"/>-->
+<!--        <h:inputText id="text2" value=""/>-->
+    </div>
+
+    <h:outputScript>
+        function anotherFocusFunction(input) {
+            var text2Element = document.getElementById("text2");
+            if (text2Element) {
+                text2Element.value = input.value;
+            }
+        }
+    </h:outputScript>
+</h:body>
+
+</html>

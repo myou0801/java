@@ -11,6 +11,9 @@ repositories {
     maven {
         url 'https://repository.jboss.org/nexus/content/repositories/releases/'
     }
+    maven {
+        url 'https://repo.gradle.org/gradle/libs-releases/'
+    }
 }
 
 ext {
@@ -29,10 +32,16 @@ dependencies {
 
     implementation('org.mybatis:mybatis:3.5.16')
     implementation('org.mybatis:mybatis-cdi:2.0.2')
-    testImplementation('com.h2database:h2:2.2.224')
+
+    implementation('com.zaxxer:HikariCP:5.1.0')
+    implementation('org.primefaces:primefaces:13.0.7:jakarta')
+    implementation('com.h2database:h2:2.3.232')
+
+
+    testImplementation('com.h2database:h2:2.3.232')
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    testImplementation ('org.mockito:mockito-junit-jupiter:5.12.0')
+    testImplementation('org.mockito:mockito-junit-jupiter:5.12.0')
 
 
 //    testImplementation('org.jboss.jsfunit:jboss-jsfunit:2.0.0.Beta2')
@@ -43,8 +52,10 @@ dependencies {
 
 
     testImplementation('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
-    testImplementation('org.glassfish:jakarta.faces:4.1.1')
-    testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-el-api:4.1.0')
+//    testImplementation('org.glassfish:jakarta.faces:4.1.1')
+//    testImplementation('jakarta.enterprise:jakarta.enterprise.cdi-el-api:4.1.0')
+    testImplementation('org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-gradle:3.3.1')
+
 
 }
 
